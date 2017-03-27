@@ -31,19 +31,8 @@
       </div>
     </div>   
     <div id="result_conversation" style="visibility: hidden">
-    <table style="width:100%">
-  		<tr>
-    		<th>Car Position</th>
-    		<th>Your direction</th> 
-    
-  		</tr>
-  		<tr>
-    		<td><div id="map" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
-    		<td><div id="panel" style="width: 300px; float: right;"></div></td> 
-      </tr>
-	</table>
-      
-      
+      <div id="map" style="background:black;width: 280px; height: 400px; float: left; color: white"></div>
+      <div id="panel" style="width: 300px; float: right;"></div>
     </div>
     <div>
  <!--<button id="demo" onclick="showResult()">show Result</button>-->
