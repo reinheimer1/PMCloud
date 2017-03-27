@@ -77,31 +77,33 @@ app.post('/api/message', function(req, res) {
 			  console.log("Test temp");
 		  }
 */
+
 	      //onsole.log("Test: ",data);
-	      
           if(data.context && data.context.finished==='true')
           {
-  	        if(data.context && data.context.atcar==='true')
-			{
-				var request = require('request');
-				var conversation_answer = data;	
-				var options = {
-					method: 'POST',
-					url: 'https://CognitiveCarBookingApp.mybluemix.net/book',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					json: conversation_answer		
-				};	
-				
-				//send request with conversation data result to next service
-				request(options, function(err, result, body) {
-					//console.log("CAROLINE", err);
-					//console.log("Result:", body);
-					data.extra = body;
-					 return res.json(updateMessage(payload, data));
-				});   
-			}				
+			var path = "book";
+	        if(data.context.atcar == 'true') {
+				path = "car"
+			}
+			
+			var request = require('request');
+			var conversation_answer = data;	
+			var options = {
+			    method: 'POST',
+			    url: 'https://CognitiveCarBookingApp.mybluemix.net/' + path,
+			    headers: {
+			        'Content-Type': 'application/json'
+			    },
+			    json: conversation_answer		
+			};	
+			
+			//send request with conversation data result to next service
+			request(options, function(err, result, body) {
+				//console.log("CAROLINE", err);
+				//console.log("Result:", body);
+				data.extra = body;
+				 return res.json(updateMessage(payload, data));
+			});    	
 		  } else {
 	       return res.json(updateMessage(payload, data));
 		  }
