@@ -48,8 +48,6 @@ function callback(error, response, body) {
     }
 }
 
-
-
 // Endpoint to be call from the client side
 app.post('/api/message', function(req, res) {
   var workspace = process.env.WORKSPACE_ID || '<workspace-id>';
@@ -65,37 +63,52 @@ app.post('/api/message', function(req, res) {
     context: req.body.context || {},
     input: req.body.input || {}
   };
-
-console.log(data);
-  if(data.context && data.context.finished==='true')
-  {
 	  // Send the input to the conversation service
 	  conversation.message(payload, function(err, data) {
+		  		  
 	    if (err) {
 	      return res.status(err.code || 500).json(err);
 	    }else
-	    {   	
-			var request = require('request');
-			var conversation_answer = data;	
-			var options = {
-			    method: 'POST',
-			    url: 'https://CognitiveCarBookingApp.mybluemix.net/book',
-			    headers: {
-			        'Content-Type': 'application/json'
-			    },
-			    json: conversation_answer		
-			};	
-			
-			//send request with conversation data result to next service
-			request(options, function(result) {
-				//result
-			});    	
-	    	
-	      return res.json(updateMessage(payload, data));
+	    { 
+/*	
+	      console.log("Temp:", data.context.temperature);
+	      if(data.context && data.context.temperature_set==='true')
+		  {
+			  console.log("Test temp");
+		  }
+*/
+	      //onsole.log("Test: ",data);
+	      
+          if(data.context && data.context.finished==='true')
+          {
+  	        if(data.context && data.context.atcar==='true')
+			{
+				var request = require('request');
+				var conversation_answer = data;	
+				var options = {
+					method: 'POST',
+					url: 'https://CognitiveCarBookingApp.mybluemix.net/book',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					json: conversation_answer		
+				};	
+				
+				//send request with conversation data result to next service
+				request(options, function(err, result, body) {
+					//console.log("CAROLINE", err);
+					//console.log("Result:", body);
+					data.extra = body;
+					 return res.json(updateMessage(payload, data));
+				});   
+			}				
+		  } else {
+	       return res.json(updateMessage(payload, data));
+		  }
+		  
 	    }
-	  }   
+	  }    
   );
-  }
 });
 
  

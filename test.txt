@@ -1,0 +1,9 @@
+
+> PMConversation@0.1.1 start C:\tmp\test\PMCloud
+> node server.js
+
+Server running on port: 3000
+Result: {"test":"test"}
+Result: {"test":"test"}
+Result: {"test":"test"}
+Terminate batch job (Y/N)? 

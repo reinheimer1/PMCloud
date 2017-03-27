@@ -119,6 +119,54 @@ var ConversationPanel = (function() {
     var isUser = isUserMessage(typeValue);
     var textExists = (newPayload.input && newPayload.input.text)
       || (newPayload.output && newPayload.output.text);
+	  
+	  //console.log("BANANA", newPayload);
+	  if(newPayload.extra) {
+		 var element = document.getElementById("result_conversation");
+		 
+		 var directionsService = new google.maps.DirectionsService();
+         var directionsDisplay = new google.maps.DirectionsRenderer();
+   
+         var map = new google.maps.Map(document.getElementById('map'), {
+          zoom:7,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+       
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('panel'));
+         
+		var clientposition = newPayload.context.clientposition;
+		var carposition    = newPayload.context.carposition;
+		console.log(newPayload);
+		console.log("client:", clientposition);
+        console.log("car:", carposition);
+        var request = {
+          origin: clientposition,
+          destination: carposition,
+          travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+   
+        directionsService.route(request, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+          }
+        });
+		 
+		 
+		 
+		 element.style.visibility = "visible";
+		 
+		 
+		 
+		 
+		 //var panel = document.getElementById("panel");
+	     //panel.textContent = JSON.stringify(newPayload.extra);
+	  }
+	 
+	// var txtNode = element.createTextNode();
+	 
+	// txtNode.textContent = JSON.stringify(newPayload);
+  
     if (isUser !== null && textExists) {
       // Create new message DOM element
       var messageDivs = buildMessageDomElements(newPayload, isUser);

@@ -9,6 +9,8 @@
   <meta property="og:description" content="PMCloud Chat bot" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/app.css">
+  <script type="text/javascript"
+              src="https://maps.google.com/maps/api/js?sensor=false"></script>
 </head>
 <body>
 <!--
@@ -27,19 +29,13 @@
             onkeydown="ConversationPanel.inputKeyDown(event, this)">
         </label>
       </div>
-    </div> 
-   
-    <script> 
-   function showResult() {
-   document.getElementById("result_conversation").style.visibility = "visible";
-    }   
-    </script>
+    </div>   
     <div id="result_conversation" style="visibility: hidden">
-      <div id="map" style="background:black;width: 280px; height: 400px; float: left;"></div>
+      <div id="map" style="background:black;width: 280px; height: 400px; float: left; color: white"></div>
       <div id="panel" style="width: 300px; float: right;"></div>
     </div>
     <div>
-    <button id="demo" onclick="showResult()">show Result</button>
+ <!--<button id="demo" onclick="showResult()">show Result</button>-->
     </div>
 
 <!--    
@@ -52,6 +48,7 @@
     </div>
   </div>
 -->
+  <script src="js/result.js"></script>
   <script src="js/common.js"></script>
   <script src="js/api.js"></script>
   <script src="js/conversation.js"></script>
