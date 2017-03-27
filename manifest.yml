@@ -1,10 +1,15 @@
+---
+declared-services:
+  pm-conversation:
+    label: conversation
+    plan: free
 applications:
-- path: .
+- name: PMConversation
+  command: npm start
+  path: .
   memory: 256M
   instances: 1
-  domain: mybluemix.net
-  name: PMCloud
-  host: PMCloud
-  disk_quota: 1024M
   services:
-  - Conversation-5c
+  - pm-conversation
+  env:
+    NPM_CONFIG_PRODUCTION: false
