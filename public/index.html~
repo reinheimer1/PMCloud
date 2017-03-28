@@ -30,6 +30,8 @@
 				</label>
 			</div>
 		</div>
+		
+    </div>
 
 		<table style="width: 100%">
 			<tr>
@@ -65,6 +67,10 @@
 
 			<tr>
 				<td>
+
+
+
+
 					<div id="result_conversation_returncar" style="visibility: hidden">
 						<div class="container">
 							<div class="header header_returncar">
@@ -95,6 +101,7 @@
 
 			<tr>
 				<td>
+
 					<div id="result_conversation_reachcar" style="visibility: hidden">
 						<div class="container">
 							<div class="header header_reachcar">
@@ -105,10 +112,13 @@
 								<table style="width: 100%">
 									<tr>
 										<th>Your position</th>
-								</tr>
+
+
+									</tr>
 									<tr>
 										<td><div id="map_returncar"
 												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
+
 									</tr>
 								</table>
 
@@ -119,8 +129,9 @@
 				</td>
 			</tr>
 
+
 		</table>
-	</div>
+
 
 		<div>
 			<!--<button id="demo" onclick="showResult()">show Result</button>-->
