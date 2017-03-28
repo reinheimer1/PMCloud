@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/app.css">
 <script type="text/javascript"
 	src="https://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" 
+	<script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.1.1.js"></script>
 </head>
 <body>
@@ -32,8 +32,8 @@
 				</label>
 			</div>
 		</div>
-		
-   
+
+
 
 		<table>
 			<tr>
@@ -44,7 +44,7 @@
 								<span>Where to pick up your car?</span>
 
 							</div>
-							<div class="content">
+							<div id="result_conversation_getcar_content" class="content">
 								<table style="width: 100%">
 									<tr>
 										<th>Car Position</th>
@@ -52,7 +52,7 @@
 
 									</tr>
 									<tr>
-										<td><div id="map_getcar"
+										<td valign="top"><div id="map_getcar"
 												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
 										<td><div id="panel_getcar"
 												style="width: 300px; float: right;"></div></td>
@@ -76,7 +76,7 @@
 					<div id="result_conversation_returncar" style="visibility: hidden">
 						<div class="container">
 							<div class="header header_returncar">
-								<span>Where to pick up your car?</span>
+								<span>Where to return  your car?</span>
 
 							</div>
 							<div class="content">
@@ -87,7 +87,7 @@
 
 									</tr>
 									<tr>
-										<td><div id="map_returncar"
+										<td valign="top"><div id="map_returncar"
 												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
 										<td><div id="panel_returncar"
 												style="width: 300px; float: right;"></div></td>
@@ -133,7 +133,7 @@
 
 
 		</table>
-		
+
 		</div>
 
 
@@ -141,7 +141,7 @@
 			<!--<button id="demo" onclick="showResult()">show Result</button>-->
 		</div>
 
-		<!--    
+		<!--
     <div id="payload-column" class="fixed-column content-column">
       <div id="payload-initial-message">
         Type something to see the output
