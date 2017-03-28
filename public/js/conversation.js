@@ -134,10 +134,16 @@ var ConversationPanel = (function() {
        
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('panel'));
-         
+		 
 		var clientposition = newPayload.context.clientposition;
 		var carposition    = newPayload.context.carposition;
-		console.log(newPayload);
+		
+		if(newPayload.context.atcar=='true')
+		{
+			clientposition = carposition;
+		}
+		
+		console.log(newPayload.context.atcar);
 		console.log("client:", clientposition);
         console.log("car:", carposition);
         var request = {
@@ -145,6 +151,7 @@ var ConversationPanel = (function() {
           destination: carposition,
           travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
+		
    
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
