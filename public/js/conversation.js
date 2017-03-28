@@ -122,52 +122,17 @@ var ConversationPanel = (function() {
 	  
 	  //console.log("BANANA", newPayload);
 	  if(newPayload.extra) {
-		 var element = document.getElementById("result_conversation");
-		 
-		 var directionsService = new google.maps.DirectionsService();
-         var directionsDisplay = new google.maps.DirectionsRenderer();
-   
-         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom:7,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-       
-        directionsDisplay.setMap(map);
-        directionsDisplay.setPanel(document.getElementById('panel'));
-		 
-		var clientposition = newPayload.context.clientposition;
-		var carposition    = newPayload.context.carposition;
 		
-		if(newPayload.context.atcar=='true')
+	    if(newPayload.context.atcar=='true')
 		{
-			clientposition = carposition;
+		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar');
 		}
 		
-		console.log(newPayload.context.atcar);
-		console.log("client:", clientposition);
-        console.log("car:", carposition);
-        var request = {
-          origin: clientposition,
-          destination: carposition,
-          travelMode: google.maps.DirectionsTravelMode.DRIVING
-        };
+		if(newPayload.context.targetadress != 'null')
+		{
+		   updatePanel(newPayload, "result_conversation_returncar", 'map_returncar', 'panel_returncar');		
+		}
 		
-   
-        directionsService.route(request, function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-          }
-        });
-		 
-		 
-		 
-		 element.style.visibility = "visible";
-		 
-		 
-		 
-		 
-		 //var panel = document.getElementById("panel");
-	     //panel.textContent = JSON.stringify(newPayload.extra);
 	  }
 	 
 	// var txtNode = element.createTextNode();
@@ -197,6 +162,53 @@ var ConversationPanel = (function() {
       scrollToChatBottom();
     }
   }
+  
+  function updatePanel(newPayload, elementId, mapsElementId, panelElementId) {
+
+		 var element = document.getElementById(elementId);
+		 
+		 var directionsService = new google.maps.DirectionsService();
+         var directionsDisplay = new google.maps.DirectionsRenderer();
+   
+         var map = new google.maps.Map(document.getElementById(mapsElementId), {
+          zoom:7,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+       
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById(panelElementId));
+		 
+		var clientposition = newPayload.context.clientposition;
+		var carposition    = newPayload.context.carposition;
+		
+		if(newPayload.context.atcar=='true')
+		{
+			clientposition = carposition;
+		}
+		
+		console.log(newPayload.context.atcar);
+		console.log("client:", clientposition);
+        console.log("car:", carposition);
+        var request = {
+          origin: clientposition,
+          destination: carposition,
+          travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+		
+   
+        directionsService.route(request, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+          }
+        });
+		 
+		 element.style.visibility = "visible";
+	
+		 //var panel = document.getElementById("panel");
+	     //panel.textContent = JSON.stringify(newPayload.extra);
+		 
+  }
+  
 
   // Checks if the given typeValue matches with the user "name", the Watson "name", or neither
   // Returns true if user, false if Watson, and null if neither
