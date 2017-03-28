@@ -43,7 +43,7 @@ var ConversationPanel = (function() {
       currentResponsePayloadSetter.call(Api, newPayloadStr);
       displayMessage(JSON.parse(newPayloadStr), settings.authorTypes.watson);
       displayMessage("Test", settings.authorTypes.watson);
-                 
+
     };
   }
 
@@ -119,30 +119,30 @@ var ConversationPanel = (function() {
     var isUser = isUserMessage(typeValue);
     var textExists = (newPayload.input && newPayload.input.text)
       || (newPayload.output && newPayload.output.text);
-	  
+
 	  //console.log("BANANA", newPayload);
 	  if(newPayload.extra) {
 		console.log(newPayload.context);
-		
+
 		if((newPayload.context.finished==='true') && (newPayload.context.atcar=='false') && (newPayload.context.targetadress=='null'))
 		{
-		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar');			
+		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar', newPayload.context.clientposition, newPayload.context.carposition);
 		}
 		else if((newPayload.context.finished==='true') && (newPayload.context.atcar=='false') && (newPayload.context.targetadress !='null'))
 		{
-		   updatePanel(newPayload, "result_conversation_returncar", 'map_returncar', 'panel_returncar');			
+		   updatePanel(newPayload, "result_conversation_returncar", 'map_returncar', 'panel_returncar', 'Via Arbe, 21 20125 Milano', newPayload.context.targetadress);
 		}
 		else if((newPayload.context.finished==='true') && (newPayload.context.atcar=='true') && (newPayload.context.targetadress=='null'))
 		{
-		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar');
-		} 
-		
+		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar', newPayload.context.clientposition, newPayload.context.carposition);
+		}
+
 	  }
-	 
+
 	// var txtNode = element.createTextNode();
-	 
+
 	// txtNode.textContent = JSON.stringify(newPayload);
-  
+
     if (isUser !== null && textExists) {
       // Create new message DOM element
       var messageDivs = buildMessageDomElements(newPayload, isUser);
@@ -166,30 +166,34 @@ var ConversationPanel = (function() {
       scrollToChatBottom();
     }
   }
-  
-  function updatePanel(newPayload, elementId, mapsElementId, panelElementId) {
+
+  function updatePanel(newPayload, elementId, mapsElementId, panelElementId, clientposition, carposition) {
 
 		 var element = document.getElementById(elementId);
-		 
+
+     if (elementId === "result_conversation_returncar") {
+        document.getElementById("result_conversation_getcar_content").style.display = "none";
+     }
+
 		 var directionsService = new google.maps.DirectionsService();
          var directionsDisplay = new google.maps.DirectionsRenderer();
-   
+
          var map = new google.maps.Map(document.getElementById(mapsElementId), {
           zoom:7,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-       
+
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById(panelElementId));
-		 
-		var clientposition = newPayload.context.clientposition;
-		var carposition    = newPayload.context.carposition;
-		
-		if(newPayload.context.atcar=='true')
+
+		// var clientposition = newPayload.context.clientposition;
+		// var carposition    = newPayload.context.carposition;
+
+		if(newPayload.context.atcar=='true' && newPayload.context.targetadress === 'null')
 		{
 			clientposition = carposition;
 		}
-		
+
 		console.log(newPayload.context.atcar);
 		console.log("client:", clientposition);
         console.log("car:", carposition);
@@ -198,21 +202,21 @@ var ConversationPanel = (function() {
           destination: carposition,
           travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
-		
-   
+
+
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
           }
         });
-		 
+
 		 element.style.visibility = "visible";
-	
+
 		 //var panel = document.getElementById("panel");
 	     //panel.textContent = JSON.stringify(newPayload.extra);
-		 
+
   }
-  
+
 
   // Checks if the given typeValue matches with the user "name", the Watson "name", or neither
   // Returns true if user, false if Watson, and null if neither
