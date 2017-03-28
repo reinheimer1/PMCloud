@@ -122,16 +122,20 @@ var ConversationPanel = (function() {
 	  
 	  //console.log("BANANA", newPayload);
 	  if(newPayload.extra) {
+		console.log(newPayload.context);
 		
-	    if(newPayload.context.atcar=='true')
+		if((newPayload.context.finished==='true') && (newPayload.context.atcar=='false') && (newPayload.context.targetadress=='null'))
+		{
+		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar');			
+		}
+		else if((newPayload.context.finished==='true') && (newPayload.context.atcar=='false') && (newPayload.context.targetadress !='null'))
+		{
+		   updatePanel(newPayload, "result_conversation_returncar", 'map_returncar', 'panel_returncar');			
+		}
+		else if((newPayload.context.finished==='true') && (newPayload.context.atcar=='true') && (newPayload.context.targetadress=='null'))
 		{
 		   updatePanel(newPayload, "result_conversation_getcar", 'map_getcar', 'panel_getcar');
-		}
-		
-		if(newPayload.context.targetadress != 'null')
-		{
-		   updatePanel(newPayload, "result_conversation_returncar", 'map_returncar', 'panel_returncar');		
-		}
+		} 
 		
 	  }
 	 

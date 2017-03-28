@@ -88,6 +88,11 @@ app.post('/api/message', function(req, res) {
 				console.log("test_path", path);
 			}
 			
+			if(data.context.targetadress != 'null')
+			{
+				path = "sms_giveback";
+			}
+			
 			var request = require('request');
 			var conversation_answer = data;	
 			var options = {
