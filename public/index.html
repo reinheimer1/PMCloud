@@ -29,22 +29,80 @@
             onkeydown="ConversationPanel.inputKeyDown(event, this)">
         </label>
       </div>
-    </div>   
-    <div id="result_conversation" style="visibility: hidden">
-    <table style="width:100%">
+    </div> 
+    
+    <div id="result_conversation_getcar" style="visibility: hidden">
+    	<div class="container_getcar">
+    		<div class="header_getcar"><span>Where to pick up your car?</span>
+
+    		</div>
+    <div class="content">
+    	<table style="width:100%">
   		<tr>
     		<th>Car Position</th>
     		<th>Your direction</th> 
     
   		</tr>
   		<tr>
-    		<td><div id="map" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
-    		<td><div id="panel" style="width: 300px; float: right;"></div></td> 
+    		<td><div id="map_getcar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
+    		<td><div id="panel_getcar" style="width: 300px; float: right;"></div></td> 
       </tr>
-	</table>
-      
-      
+		</table>
+        
     </div>
+		</div>
+	</div> 
+	
+	
+	
+	<div id="result_conversation_returncar" style="visibility: hidden">
+    	<div class="container_returncar">
+    		<div class="header_returncar"><span>Where to pick up your car?</span>
+
+    		</div>
+    <div class="content">
+    	<table style="width:100%">
+  		<tr>
+    		<th>Car Position</th>
+    		<th>Your direction</th> 
+    
+  		</tr>
+  		<tr>
+    		<td><div id="map_returncar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
+    		<td><div id="panel_returncar" style="width: 300px; float: right;"></div></td> 
+      </tr>
+		</table>
+        
+    </div>
+		</div>
+	</div> 
+	
+	<div id="result_conversation_reachcar" style="visibility: hidden">
+    	<div class="container_reachcar">
+    		<div class="header_reachcar"><span>Your position</span>
+
+    		</div>
+    <div class="content">
+    	<table style="width:100%">
+  		<tr>
+    		<th>Your position</th>
+    		 
+    
+  		</tr>
+  		<tr>
+    		<td><div id="map_returncar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
+    		 
+      </tr>
+		</table>
+        
+    </div>
+		</div>
+	</div>    
+    
+    
+      
+      
+    
     <div>
  <!--<button id="demo" onclick="showResult()">show Result</button>-->
     </div>
@@ -65,5 +123,42 @@
   <script src="js/conversation.js"></script>
   <script src="js/payload.js"></script>
   <script src="js/global.js"></script>
+<script type="text/javascript" >
+ $(".header_getcar").click(function () {
+
+    $header = $(this);
+    //getting the next element
+    $content = $header.next();
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(500, function () {
+        //execute this after slideToggle is done
+        //change text of header based on visibility of content div
+        $header.text(function () {
+            //change text based on condition
+            return $content.is(":visible") ? "Collapse" : "Where to pick up your car?";
+        });
+    });
+
+});
+
+ $(".header_returncar").click(function () {
+
+    $header = $(this);
+    //getting the next element
+    $content = $header.next();
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(500, function () {
+        //execute this after slideToggle is done
+        //change text of header based on visibility of content div
+        $header.text(function () {
+            //change text based on condition
+            return $content.is(":visible") ? "Collapse" : "Where to return your car?";
+        });
+    });
+
+});
+
+</script>  
+  
 </body>
 </html>
