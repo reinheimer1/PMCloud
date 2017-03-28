@@ -23,7 +23,8 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "watson-developer-cloud": "^2.8.1",
-    "request" : "^1.0.0"
+    "request" : "^1.0.0",
+	"ibmiotf" : "~0.2.25"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",

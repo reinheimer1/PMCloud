@@ -21,6 +21,44 @@ var bodyParser = require('body-parser'); // parser for post requests
 var Conversation = require('watson-developer-cloud/conversation/v1'); // watson sdk
 var request = require('request'); // http requests
 var app = express();
+const IoTPlatformClient = require('./IoTPlatformClient.js');
+
+const config = {
+  appInfo: {},
+  appPort: 5000,
+  appHost: 'localhost',
+  iotfCredentials: {
+    'iotCredentialsIdentifier': 'a2g6k39sl6r5',
+    'mqtt_host': '3j3jat.messaging.internetofthings.ibmcloud.com',
+    'mqtt_u_port': 1883,
+    'mqtt_s_port': 8883,
+    'http_host': '3j3jat.internetofthings.ibmcloud.com',
+    'org': '3j3jat',
+    'apiKey': 'a-3j3jat-vqtqgilelq',
+    'apiToken': 'qGdaWWqjw757xR63SI'
+  },
+  weatherCredentials: {
+    "username": "57d22fad-36a8-4903-b7bb-f2b2d7a52f3b",
+    "password": "K8Up4suBKU",
+    "host": "twcservice.eu-gb.mybluemix.net",
+    "port": 443,
+    "url": "https://57d22fad-36a8-4903-b7bb-f2b2d7a52f3b:K8Up4suBKU@twcservice.eu-gb.mybluemix.net"
+  }
+};
+
+const iotPlatformClient = new IoTPlatformClient("12345678", config.iotfCredentials);
+iotPlatformClient.connect().then(function() {
+  // iotPlatformClient.subscribeToDeviceCommands('+', '+', config.commandType).then(function() {
+  //   //iotPlatformClient.processDeviceCommands(processDeviceCommand);
+  // }).catch(function(err) {
+  //   console.error('Starting to listen events.', err);
+  //   throw new Error(err);
+  // });
+}).catch(function(err) {
+  console.error('Starting is failed.', err);
+  throw new Error(err);
+});
+
 
 // Bootstrap application settings
 app.use(express.static('./public')); // load UI from public folder
@@ -47,6 +85,30 @@ function callback(error, response, body) {
         console.log('Error happened: '+ error);
     }
 }
+
+app.post('/api/command', function(req, res) {
+  console.info('change colour is requested.');
+  const myCommand = {
+    on: true
+  };
+  var myReq = req.body;
+  if (myReq && myReq.doorState) {
+    if (myReq.doorState === 'lock') {
+      myCommand.hue = 0;
+    } else if (myReq.doorState === 'unlock') {
+      myCommand.hue = 25500;
+    } else {
+      res.status(404).json({error: 'Your request is invalid.'});
+      return;
+    }
+    isBlinking = false;
+    iotPlatformClient.publishDeviceCommand('hueLight', 'hueLight461B987',
+        'action', 'json', JSON.stringify(myCommand));
+    res.send({msg: 'Your command is sent.'});
+  } else {
+    res.status(404).json({error: 'Your request is invalid.'});
+  }
+});
 
 // Endpoint to be call from the client side
 app.post('/api/message', function(req, res) {
