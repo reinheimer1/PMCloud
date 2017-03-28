@@ -1,113 +1,132 @@
 <html>
 <head>
-  <base href="/">
-  <title>Conversation Chat App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta property="og:image" content="conversation.svg" />
-  <meta property="og:title" content="Problem Determination Conversation" />
-  <meta property="og:description" content="PMCloud Chat bot" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/app.css">
-  <script type="text/javascript"
-              src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<base href="/">
+<title>Conversation Chat App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta property="og:image" content="conversation.svg" />
+<meta property="og:title" content="Problem Determination Conversation" />
+<meta property="og:description" content="PMCloud Chat bot" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="css/app.css">
+<script type="text/javascript"
+	src="https://maps.google.com/maps/api/js?sensor=false"></script>
 </head>
 <body>
-<!--
+	<!--
   <div id="view-change-button" class="button" onclick="PayloadPanel.togglePanel(event, this)">
     <img class="option full" src="../img/Chat Button.png">
     <img class="option not-full" src="../img/Code Button.png">
   </div>
 -->
-  <div id="contentParent" class="responsive-columns-wrapper">
-    <div id="chat-column-holder" class="responsive-column content-column">
-      <div class="chat-column">
-        <div id="scrollingChat"></div>
-        <label for="textInput" class="inputOutline">
-          <input id="textInput" class="input responsive-column"
-            placeholder="Type something" type="text"
-            onkeydown="ConversationPanel.inputKeyDown(event, this)">
-        </label>
-      </div>
-    </div> 
-    
-    <div id="result_conversation_getcar" style="visibility: hidden">
-    	<div class="container">
-    		<div class="header header_getcar"><span>Where to pick up your car?</span>
-
-    		</div>
-    <div class="content">
-    	<table style="width:100%">
-  		<tr>
-    		<th>Car Position</th>
-    		<th>Your direction</th> 
-    
-  		</tr>
-  		<tr>
-    		<td><div id="map_getcar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
-    		<td><div id="panel_getcar" style="width: 300px; float: right;"></div></td> 
-      </tr>
-		</table>
-        
-    </div>
+	<div id="contentParent" class="responsive-columns-wrapper">
+		<div id="chat-column-holder" class="responsive-column content-column">
+			<div class="chat-column">
+				<div id="scrollingChat"></div>
+				<label for="textInput" class="inputOutline"> <input
+					id="textInput" class="input responsive-column"
+					placeholder="Type something" type="text"
+					onkeydown="ConversationPanel.inputKeyDown(event, this)">
+				</label>
+			</div>
 		</div>
-	</div> 
-	
-	
-	
-	<div id="result_conversation_returncar" style="visibility: hidden">
-    	<div class="container">
-    		<div class="header header_returncar"><span>Where to pick up your car?</span>
 
-    		</div>
-    <div class="content">
-    	<table style="width:100%">
-  		<tr>
-    		<th>Car Position</th>
-    		<th>Your direction</th> 
-    
-  		</tr>
-  		<tr>
-    		<td><div id="map_returncar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
-    		<td><div id="panel_returncar" style="width: 300px; float: right;"></div></td> 
-      </tr>
+		<table style="width: 100%">
+			<tr>
+				<td>
+					<div id="result_conversation_getcar" style="visibility: hidden">
+						<div class="container">
+							<div class="header header_getcar">
+								<span>Where to pick up your car?</span>
+
+							</div>
+							<div class="content">
+								<table style="width: 100%">
+									<tr>
+										<th>Car Position</th>
+										<th>Your direction</th>
+
+									</tr>
+									<tr>
+										<td><div id="map_getcar"
+												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
+										<td><div id="panel_getcar"
+												style="width: 300px; float: right;"></div></td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<div id="result_conversation_returncar" style="visibility: hidden">
+						<div class="container">
+							<div class="header header_returncar">
+								<span>Where to pick up your car?</span>
+
+							</div>
+							<div class="content">
+								<table style="width: 100%">
+									<tr>
+										<th>Car Position</th>
+										<th>Your direction</th>
+
+									</tr>
+									<tr>
+										<td><div id="map_returncar"
+												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
+										<td><div id="panel_returncar"
+												style="width: 300px; float: right;"></div></td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<div id="result_conversation_reachcar" style="visibility: hidden">
+						<div class="container">
+							<div class="header header_reachcar">
+								<span>Your position</span>
+
+							</div>
+							<div class="content">
+								<table style="width: 100%">
+									<tr>
+										<th>Your position</th>
+								</tr>
+									<tr>
+										<td><div id="map_returncar"
+												style="background: black; width: 280px; height: 400px; float: left; color: white"></div></td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
+				</td>
+			</tr>
+
 		</table>
-        
-    </div>
-		</div>
-	</div> 
-	
-	<div id="result_conversation_reachcar" style="visibility: hidden">
-    	<div class="container">
-    		<div class="header header_reachcar"><span>Your position</span>
 
-    		</div>
-    <div class="content">
-    	<table style="width:100%">
-  		<tr>
-    		<th>Your position</th>
-    		 
-    
-  		</tr>
-  		<tr>
-    		<td><div id="map_returncar" style="background:black;width: 280px; height: 400px; float: left; color: white"></div></td>
-    		 
-      </tr>
-		</table>
-        
-    </div>
-		</div>
-	</div>    
-    
-    
-      
-      
-    
-    <div>
- <!--<button id="demo" onclick="showResult()">show Result</button>-->
-    </div>
 
-<!--    
+		<div>
+			<!--<button id="demo" onclick="showResult()">show Result</button>-->
+		</div>
+
+		<!--    
     <div id="payload-column" class="fixed-column content-column">
       <div id="payload-initial-message">
         Type something to see the output
@@ -117,13 +136,13 @@
     </div>
   </div>
 -->
-  <script src="js/result.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/conversation.js"></script>
-  <script src="js/payload.js"></script>
-  <script src="js/global.js"></script>
-<script type="text/javascript" >
+		<script src="js/result.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/api.js"></script>
+		<script src="js/conversation.js"></script>
+		<script src="js/payload.js"></script>
+		<script src="js/global.js"></script>
+		<script type="text/javascript">
  $(".header_getcar").click(function () {
 
     $header = $(this);
@@ -158,7 +177,6 @@
 
 });
 
-</script>  
-  
+</script>
 </body>
 </html>
