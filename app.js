@@ -49,6 +49,8 @@ function callback(error, response, body) {
     }
 }
 
+
+
 // Endpoint to be call from the client side
 app.post('/api/message', function(req, res) {
   var workspace = process.env.WORKSPACE_ID || '<workspace-id>';
@@ -66,12 +68,12 @@ app.post('/api/message', function(req, res) {
   };
 	  // Send the input to the conversation service
 	  conversation.message(payload, function(err, data) {
-		  		  
+
 	    if (err) {
 	      return res.status(err.code || 500).json(err);
 	    }else
-	    { 
-/*	
+	    {
+/*
 	      console.log("Temp:", data.context.temperature);
 	      if(data.context && data.context.temperature_set==='true')
 		  {
@@ -80,47 +82,44 @@ app.post('/api/message', function(req, res) {
 */
 
 	      //onsole.log("Test: ",data);
-          if(data.context && data.context.finished==='true')
+        if(data.context && (data.context.finished==='true' || data.context.init === 'true'))
           {
-			var path = "book";
-	        if(data.context.atcar == 'true') {
-				path = "car"
-				console.log("test_path", path);
+			   var path = "book";
+	      if(data.context.atcar == 'true') {
+				      path = "car"
+			   } else if(data.context.targetadress != 'null') {
+				       path = "sms_giveback";
 			}
-			
-			if(data.context.targetadress != 'null')
-			{
-				path = "sms_giveback";
-			}
-			
+
+      console.log("Calling path:", path);
 			var request = require('request');
-			var conversation_answer = data;	
+			var conversation_answer = data;
 			var options = {
 			    method: 'POST',
 			    url: 'https://CognitiveCarBookingApp.mybluemix.net/' + path,
 			    headers: {
 			        'Content-Type': 'application/json'
 			    },
-			    json: conversation_answer		
-			};	
-			
+			    json: conversation_answer
+			};
+
 			//send request with conversation data result to next service
 			request(options, function(err, result, body) {
 				//console.log("CAROLINE", err);
 				//console.log("Result:", body);
 				data.extra = body;
 				 return res.json(updateMessage(payload, data));
-			});    	
+			});
 		  } else {
 	       return res.json(updateMessage(payload, data));
 		  }
-		  
+
 	    }
-	  }    
+	  }
   );
 });
 
- 
+
 
 /**
  * Updates the response text using the intent confidence
